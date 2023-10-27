@@ -1,0 +1,14 @@
+name: Lint Job
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: npm install
+    - name: Run Linter
+      run: npm run lint

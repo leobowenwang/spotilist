@@ -7,8 +7,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install Dependencies
-      run: npm install
-    - name: Run Linter
-      run: npm run lint
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Linter
+        run: npm run lint
