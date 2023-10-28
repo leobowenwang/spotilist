@@ -1,3 +1,5 @@
+import {attachFormValidation} from "./form";
+
 async function loadHTMLFile(filePath: string): Promise<string> {
     const response = await fetch(`/spotilist/html/${filePath}`);
     return await response.text();
@@ -15,13 +17,20 @@ export async function router(): Promise<void> {
     const mainContent = document.getElementById("main-content");
 
     if (mainContent) {
-        if (url === "/about") {
-            mainContent.innerHTML = await loadHTMLFile("about.html");
-        } else if (url === "/home") {
-            mainContent.innerHTML = await loadHTMLFile("home.html");
-        } else {
-            mainContent.innerHTML = "404 Not Found";
+        switch (url) {
+            case "/home":
+                mainContent.innerHTML = await loadHTMLFile("home.html");
+                break;
+            case "/about":
+                mainContent.innerHTML = await loadHTMLFile("about.html");
+                break;
+            case "/form":
+                mainContent.innerHTML = await loadHTMLFile("form.html");
+                attachFormValidation();
+                break;
+            default:
+                mainContent.innerHTML = "404 Not Found";
+                break;
         }
     }
 }
-
