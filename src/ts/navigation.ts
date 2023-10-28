@@ -3,14 +3,14 @@ async function loadHTMLFile(filePath: string): Promise<string> {
     return await response.text();
 }
 
-async function navigation(): Promise<void> {
+export async function navigation(): Promise<void> {
     const navContainer = document.getElementById("navbar-container");
     if (navContainer) {
         navContainer.innerHTML = await loadHTMLFile("navigation.html");
     }
 }
 
-async function router(): Promise<void> {
+export async function router(): Promise<void> {
     const url = window.location.hash.slice(1) || "/";
     const mainContent = document.getElementById("main-content");
 
@@ -25,15 +25,3 @@ async function router(): Promise<void> {
     }
 }
 
-async function main(): Promise<void> {
-    try {
-        await navigation();
-        window.addEventListener("hashchange", router);
-        window.addEventListener("load", router);
-    } catch (error) {
-        console.error("An error occurred:", error);
-    }
-}
-
-
-main();
