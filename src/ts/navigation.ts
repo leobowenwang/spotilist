@@ -1,5 +1,5 @@
 async function loadHTMLFile(filePath: string): Promise<string> {
-  const response = await fetch(`/src/html/${filePath}`);
+  const response = await fetch(`/spotilist/html/${filePath}`);
   return await response.text();
 }
 
@@ -26,10 +26,14 @@ async function router(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  await navigation();
-
-  window.addEventListener("hashchange", router);
-  window.addEventListener("load", router);
+  try {
+    await navigation();
+    window.addEventListener("hashchange", router);
+    window.addEventListener("load", router);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 }
+
 
 main();
