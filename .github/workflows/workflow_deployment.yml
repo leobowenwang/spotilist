@@ -9,9 +9,9 @@ jobs:
   lint:
     uses: ./.github/workflows/lint.yml
 
-#   test:
-#     needs: lint
-#     uses: ./.github/workflows/test.yml
+  #   test:
+  #     needs: lint
+  #     uses: ./.github/workflows/test.yml
 
   build:
     needs: lint
