@@ -46,5 +46,6 @@ This project is a submission by Leo Bowen Wang for the Frontend Application Task
 ## Lighthouse Accessibility Compliance
 
 The project is compliant with Web Accessibility standards as verified by Lighthouse analysis.
+
 <img src="public/img/lighthouse.png" width="500">
 <img src="public/img/audit.png" width="500">

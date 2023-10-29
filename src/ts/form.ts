@@ -17,7 +17,7 @@ function handleSubmit(event: Event) {
   const outcomeElement = document.getElementById("validation");
 
   if (outcomeElement) {
-    outcomeElement.style.display = "block"; // Ensures the div is visible
+    outcomeElement.style.display = "block";
     outcomeElement.textContent = allValid
       ? "Validation Success 👍"
       : "Validation Failed 👎";
