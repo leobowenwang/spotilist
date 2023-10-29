@@ -17,7 +17,6 @@ function createSongRow(
   const cell2 = document.createElement("td");
   const cell3 = document.createElement("td");
   const cell4 = document.createElement("td");
-  const cell5 = document.createElement("td");
 
   const img = document.createElement("img");
   img.src = song.artworkUrl100 || "";
@@ -26,29 +25,29 @@ function createSongRow(
 
   cell2.textContent = song.trackName;
   cell3.textContent = song.artistName;
-  cell4.textContent = song.collectionName || "";
 
   if (addButtonCallback) {
     const addButton = document.createElement("button");
     addButton.className = "btn btn-success";
-    addButton.textContent = "Add";
+    addButton.textContent = "+";
+    addButton.style.fontWeight = "bold";
     addButton.addEventListener("click", addButtonCallback);
-    cell5.appendChild(addButton);
+    cell4.appendChild(addButton);
   }
 
   if (removeButtonCallback) {
     const removeButton = document.createElement("button");
     removeButton.className = "btn btn-danger";
-    removeButton.textContent = "Remove";
+    removeButton.textContent = "-";
+    removeButton.style.fontWeight = "bold";
     removeButton.addEventListener("click", removeButtonCallback);
-    cell5.appendChild(removeButton);
+    cell4.appendChild(removeButton);
   }
 
   row.appendChild(cell1);
   row.appendChild(cell2);
   row.appendChild(cell3);
   row.appendChild(cell4);
-  row.appendChild(cell5);
 
   return row;
 }
