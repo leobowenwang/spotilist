@@ -1,1 +1,46 @@
-home
+<div class="container my-5">
+  <div class="col-md-12">
+    <h1 class="display-4 mb-4">Spotilist</h1>
+  </div>
+  <div class="input-group my-3">
+    <input
+      id="searchInput"
+      type="text"
+      class="form-control"
+      placeholder="Search for songs"
+      aria-label="Search for songs"
+    />
+    <div class="input-group-append">
+      <button id="searchButton" class="btn btn-primary" type="button">
+        Search
+      </button>
+    </div>
+  </div>
+
+  <table id="songsTable" class="table mt-5">
+    <thead id="songsTableHead" class="d-none">
+      <tr>
+        <th scope="col">Album Cover</th>
+        <th scope="col">Title</th>
+        <th scope="col">Artist</th>
+        <th scope="col">Album</th>
+        <th scope="col">Favorites</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>Favorites</h2>
+  <table id="favoritesTable" class="table mt-5">
+    <thead id="favoritesTableHead" class="d-none">
+      <tr>
+        <th scope="col">Album Cover</th>
+        <th scope="col">Title</th>
+        <th scope="col">Artist</th>
+        <th scope="col">Album</th>
+        <th scope="col">Favorites</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>

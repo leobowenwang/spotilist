@@ -1,4 +1,5 @@
 import { initializeForm } from "./form";
+import { initializeHome } from "./home.ts";
 
 async function loadHTMLFile(filePath: string): Promise<string> {
   const response = await fetch(`/spotilist/html/${filePath}`);
@@ -20,6 +21,7 @@ export async function router(): Promise<void> {
     switch (url) {
       case "/home":
         mainContent.innerHTML = await loadHTMLFile("home.html");
+        await initializeHome();
         break;
       case "/about":
         mainContent.innerHTML = await loadHTMLFile("about.html");
