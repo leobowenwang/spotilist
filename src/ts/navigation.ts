@@ -13,7 +13,7 @@ export async function navigation(): Promise<void> {
 }
 
 export async function router(): Promise<void> {
-  const url = window.location.hash.slice(1) || "/";
+  const url = window.location.hash.slice(1) || "/home";
   const mainContent = document.getElementById("main-content");
 
   if (mainContent) {
