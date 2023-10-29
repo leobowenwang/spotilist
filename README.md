@@ -1,5 +1,7 @@
 # Spotilist Web Project
 
+Spotilist is a web-based application designed to elevate your music experience. It allows you to effortlessly browse through a wide range of songs from iTunes and add your favorites to a personalized list.
+
 ## Frontend Application Tasks – Web Engineering
 
 This project is a submission by Leo Bowen Wang for the Frontend Application Tasks in Web Engineering.
