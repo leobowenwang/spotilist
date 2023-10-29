@@ -1,143 +1,88 @@
+type Validator<T> = (value: T) => boolean;
+
+interface FieldValidator {
+    fieldId: string;
+    validator: Validator<string | number>;
+    errorMessage: string;
+}
+
+const validators: FieldValidator[] = [
+    {
+        fieldId: "username",
+        validator: (value: string | number) => typeof value === 'string' && value.length >= 4,
+        errorMessage: "Username must be at least 4 characters.",
+    },
+    {
+        fieldId: "age",
+        validator: (value: string | number) => typeof value === 'number' && value >= 1 && value <= 100,
+        errorMessage: "Age must be between 1 and 100.",
+    },
+    {
+        fieldId: "password",
+        validator: (value: string | number) =>
+            typeof value === 'string' &&
+            value.length >= 8 &&
+            /[A-Z]/.test(value) &&
+            /[a-z]/.test(value) &&
+            /[0-9]/.test(value) &&
+            /[^A-Za-z0-9]/.test(value),
+        errorMessage: "Password must be at least 8 characters, with at least one uppercase letter, one lowercase letter, one number, and one special character.",
+    },
+    {
+        fieldId: "email",
+        validator: (value: string | number) => typeof value === 'string' && value.includes("@"),
+        errorMessage: "Invalid email address.",
+    },
+];
+
 export function initializeForm(formId: string): HTMLFormElement | null {
     const form = document.getElementById(formId) as HTMLFormElement;
-    form?.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const allValid = checkAllFieldsValid();
-        const successElement = document.getElementById("validation-success");
-
-        if (successElement) {
-            successElement.style.display = allValid ? "block" : "none";
-            successElement.textContent = allValid ? "Validation Success 👍" : "";
-        }
+    form?.addEventListener("submit", handleSubmit);
+    validators.forEach(({fieldId}) => {
+        const inputElement = document.getElementById(fieldId) as HTMLInputElement;
+        inputElement?.addEventListener("blur", () => validateField(fieldId));
     });
     return form;
 }
 
-function validateField<T>(
-    fieldId: string,
-    validator: (value: T) => boolean,
-    errorMessage: string,
-): boolean {
+function handleSubmit(event: Event) {
+    event.preventDefault();
+    const allValid = checkAllFieldsValid();
+    const outcomeElement = document.getElementById("validation");
+
+    if (outcomeElement) {
+        outcomeElement.style.display = "block";  // Ensures the div is visible
+        outcomeElement.textContent = allValid ? "Validation Success 👍" : "Validation Failed 👎";
+        outcomeElement.className = allValid ? "alert alert-success" : "alert alert-danger";
+    }
+}
+
+function validateField(fieldId: string): boolean {
+    const {validator, errorMessage = "Invalid input."} = validators.find(v => v.fieldId === fieldId) || {};
     const inputElement = document.getElementById(fieldId) as HTMLInputElement;
     const errorElement = document.getElementById(`${fieldId}-error`);
 
-    let isValid = false;
-    if (inputElement && errorElement) {
-        const value: T =
-            inputElement.type === "number"
-                ? (parseFloat(inputElement.value) as unknown as T)
-                : (inputElement.value as unknown as T);
-        isValid = validator(value);
+    if (inputElement && errorElement && validator) {
+        const value = inputElement.type === "number" ? parseFloat(inputElement.value) : inputElement.value;
+        const isValid = validator(value);
         toggleValidationClasses(inputElement, isValid);
         displayValidationError(errorElement, isValid, errorMessage);
+        return isValid;
     }
-
-    return isValid;
+    return false;
 }
+
 
 function checkAllFieldsValid(): boolean {
-    const validators = [
-        {
-            fieldId: "username",
-            validator: validateString,
-            condition: (value: string) => value.length >= 4,
-        },
-        {
-            fieldId: "age",
-            validator: validateNumber,
-            condition: (value: number) => value >= 1 && value <= 100,
-        },
-        {
-            fieldId: "password",
-            validator: validateString,
-            condition: (value: string) => value.length >= 8,
-        },
-        {
-            fieldId: "email",
-            validator: validateString,
-            condition: (value: string) => value.includes("@"),
-        },
-    ];
-
-    return validators.every(({fieldId, validator, condition}) =>
-        validator(fieldId, condition as (value: any) => boolean),
-    );
+    return validators.every(({fieldId}) => validateField(fieldId));
 }
 
-function validateString(
-    fieldId: string,
-    condition: (value: string) => boolean,
-): boolean {
-    const inputElement = document.getElementById(fieldId) as HTMLInputElement;
-    if (inputElement) {
-        const value = inputElement.value;
-        return condition(value);
-    }
-    return false;
-}
-
-function validateNumber(
-    fieldId: string,
-    condition: (value: number) => boolean,
-): boolean {
-    const inputElement = document.getElementById(fieldId) as HTMLInputElement;
-    if (inputElement) {
-        const value = parseFloat(inputElement.value);
-        return !isNaN(value) && condition(value);
-    }
-    return false;
-}
-
-export function toggleValidationClasses(
-    element: HTMLInputElement,
-    isValid: boolean,
-) {
+function toggleValidationClasses(element: HTMLInputElement, isValid: boolean) {
     element.classList.toggle("is-invalid", !isValid);
     element.classList.toggle("is-valid", isValid);
 }
 
-export function displayValidationError(
-    element: HTMLElement,
-    isValid: boolean,
-    errorMessage: string,
-) {
+function displayValidationError(element: HTMLElement, isValid: boolean, errorMessage: string) {
     element.textContent = isValid ? "" : errorMessage;
     element.style.display = isValid ? "none" : "block";
-}
-
-export function attachFormValidation() {
-    initializeForm("user-form");
-    attachFieldValidation(
-        "username",
-        (value) => (value as string).length >= 4,
-        "Username must be at least 4 characters.",
-    );
-    attachFieldValidation(
-        "age",
-        (value) => (value as number) >= 1 && (value as number) <= 100,
-        "Age must be between 1 and 100.",
-    );
-    attachFieldValidation(
-        "password",
-        (value) => (value as string).length >= 8,
-        "Password must be at least 8 characters.",
-    );
-    attachFieldValidation(
-        "email",
-        (value) => (value as string).includes("@"),
-        "Invalid email address.",
-    );
-}
-
-function attachFieldValidation<T>(
-    fieldId: string,
-    validator: (value: T) => boolean,
-    errorMessage: string,
-) {
-    const inputElement = document.getElementById(fieldId) as HTMLInputElement;
-    if (inputElement) {
-        inputElement.addEventListener("blur", function () {
-            validateField(fieldId, validator, errorMessage);
-        });
-    }
 }

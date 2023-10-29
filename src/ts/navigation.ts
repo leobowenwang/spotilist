@@ -1,4 +1,4 @@
-import {attachFormValidation} from "./form";
+import { initializeForm } from "./form";
 
 async function loadHTMLFile(filePath: string): Promise<string> {
     const response = await fetch(`/spotilist/html/${filePath}`);
@@ -26,7 +26,7 @@ export async function router(): Promise<void> {
                 break;
             case "/form":
                 mainContent.innerHTML = await loadHTMLFile("form.html");
-                attachFormValidation();
+                initializeForm("user-form");
                 break;
             default:
                 mainContent.innerHTML = "404 Not Found";
