@@ -1,27 +1,28 @@
-<form id="user-form" class="container mt-5">
+<form class="container mt-5" form id="user-form" method="post">
     <div class="form-group mb-3">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" class="form-control" required>
-        <div id="username-error" class="invalid-feedback"></div>
+        <input class="form-control" id="username" name="username" type="text"/>
+        <div class="invalid-feedback" id="username-error"></div>
     </div>
 
     <div class="form-group mb-3">
         <label for="age">Age:</label>
-        <input type="number" id="age" name="age" class="form-control" required min="0">
-        <div id="age-error" class="invalid-feedback"></div>
+        <input class="form-control" id="age" min="0" name="age" type="number"/>
+        <div class="invalid-feedback" id="age-error"></div>
     </div>
 
     <div class="form-group mb-3">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" class="form-control">
-        <div id="password-error" class="invalid-feedback"></div>
+        <input class="form-control" id="password" name="password" type="password"/>
+        <div class="invalid-feedback" id="password-error"></div>
     </div>
 
     <div class="form-group mb-3">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" class="form-control" required>
-        <div id="email-error" class="invalid-feedback"></div>
+        <input class="form-control" id="email" name="email" type="email"/>
+        <div class="invalid-feedback" id="email-error"></div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <div class="text-success" id="validation-success" style="display: none"></div>
 </form>
